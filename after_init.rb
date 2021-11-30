@@ -48,13 +48,13 @@ RedmineExtensions::Reloader.to_prepare do
 end
 
 
-Redmine::MenuManager.map :top_menu do |menu|
-  menu.push(:easy_gantt, { controller: 'easy_gantt', action: 'index', set_filter: 0 },
-    caption: :label_easy_gantt,
-    after: :documents,
-    html: { class: 'icon icon-stats' },
-    if: proc { User.current.allowed_to_globally?(:view_global_easy_gantt) })
-end
+# Redmine::MenuManager.map :top_menu do |menu|
+#   menu.push(:easy_gantt, { controller: 'easy_gantt', action: 'index', set_filter: 0 },
+#     caption: :label_easy_gantt,
+#     after: :documents,
+#     html: { class: 'icon icon-stats' },
+#     if: proc { User.current.allowed_to_globally?(:view_global_easy_gantt) })
+# end
 
 Redmine::MenuManager.map :project_menu do |menu|
   menu.push(:easy_gantt, { controller: 'easy_gantt', action: 'index' },
@@ -77,25 +77,25 @@ Redmine::MenuManager.map :easy_gantt_tools do |menu|
   menu.push(:add_task, 'javascript:void(0)',
             param: :project_id,
             caption: :label_new,
-            html: { trial: true, icon: 'icon-add' },
+            html: { trial: false, icon: 'icon-add' },
             if: proc { |p| p.present? })
 
   menu.push(:critical, 'javascript:void(0)',
             param: :project_id,
             caption: :'easy_gantt.button.critical_path',
-            html: { trial: true, icon: 'icon-summary' },
+            html: { trial: false, icon: 'icon-summary' },
             if: proc { |p| p.present? })
 
   menu.push(:baseline, 'javascript:void(0)',
             param: :project_id,
             caption: :'easy_gantt.button.create_baseline',
-            html: { trial: true, icon: 'icon-projects icon-project' },
+            html: { trial: false, icon: 'icon-projects icon-project' },
             if: proc { |p| p.present? })
 
   menu.push(:resource, proc { |project| defined?(EasyUserAllocations) ? { controller: 'user_allocation_gantt', project_id: project } : nil },
             param: :project_id,
             caption: :'easy_gantt.button.resource_management',
-            html: { trial: true, icon: 'icon-stats', easy_text: defined?(EasyExtensions) },
+            html: { trial: false, icon: 'icon-stats', easy_text: defined?(EasyExtensions) },
             if: proc { |p| p.present? })
 
 end
